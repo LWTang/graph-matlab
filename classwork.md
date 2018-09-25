@@ -25,3 +25,30 @@ for ( i=0; i<P; i++ ) {
 > M * N 的灰度图I逆时针旋转 A 度得到图像J，要求使用近邻插值
 
 * 算法
+参考：<a href="https://blog.csdn.net/liyuan02/article/details/6750828">原理</a>和<a href="https://blog.csdn.net/lkj345/article/details/50555870">实现</a>
+```
+初始化 图像J的像素值为0
+读取 图像I
+计算J的高和宽：
+  P=ceil(abs(M*cos(A)) + abs(N*sin(A)))
+  Q=ceil(abs(N*cos(A)) + abs(M*sin(A)))
+计算坐标变换的矩阵：
+  rm1=[1 0 0; 0 -1 0; -0.5*Q 0.5*P 1]
+  rm2=[cos(A) -sin(A) 0; sin(A) cos(A) 0; 0 0 1]
+  rm3=[1 0 0; 0 -1 0; 0.5*N 0.5*M 1]
+  for i=1:P
+    for j=1:Q
+      计算J上每个像素对应在I上的像素值：
+        src_coordinate=[j i 1]*rm1*rm2*rm3
+        row=round(src_coordinate(2))
+        col=round(src_coordinate(1))
+        if row<1 || col<1 || row>M || col>N
+            imgdes(i,j)=0;
+        else
+            imgdes(i,j)=imgsrc(row,col);
+```
+
+### 直方图均衡化
+> M * N 的灰度图I中灰度为g的像素数为h(g)，对I进行直方图均衡化得到J
+
+* 算法
