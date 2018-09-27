@@ -79,3 +79,31 @@ for ( i=0; i<P; i++ ) {
 > M * N 的灰度图I中灰度为g的像素数为h(g)，另给定一个直方图t(g)，对I进行变换，使变换后的直方图与t相同(近似相等)。
 
 * 算法
+```
+读取 图像I M1 * N1 图像T M2 * N2
+初始化 图像J的像素值为0
+两个图像的直方图：
+  src1hist=imhist(I)/(M1*N1);
+  src2hist=imhist(T)/(M2*N2);
+两个累积直方图：
+  f1=zeros(1,256)
+  f1(1,1)=src1hist(1,1)
+  f2=zeros(1,256)
+  f2(1,1)=src2hist(1,1)
+  for i=2:256
+    f1(1,i)=f1(1,i-1)+src1hist(i,1)
+    f2(1,i)=f2(1,i-1)+src2hist(i,1)
+求与I各像素值分布最接近的T的像素值：
+  for i=1:256
+    value{i}=abs(f2-f1(1,i))
+    [temp index(i)]=min(value{i})
+赋给J：
+  for i=1:M1
+    for j=1:N1
+        imgdes(i,j)=index(imgsrc1(i,j)+1)-1
+```
+
+### 图像灰度的对数/指数变换
+> 图像I整体偏暗，为了更好的区分暗区中的对象，应选用对数变换还是指数变换，给出变换方法。
+
+* 算法
