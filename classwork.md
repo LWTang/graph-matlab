@@ -25,6 +25,7 @@ for ( i=0; i<P; i++ ) {
 ### t2.图像旋转
 > M * N 的灰度图I逆时针旋转 A 度得到图像J，要求使用近邻插值。
 
+* <a href="https://github.com/LWTang/graph-matlab/blob/master/t2.m">src code</a>
 * 算法
 参考：<a href="https://blog.csdn.net/liyuan02/article/details/6750828">原理</a>和<a href="https://blog.csdn.net/lkj345/article/details/50555870">实现</a>
 ```
@@ -52,6 +53,7 @@ for ( i=0; i<P; i++ ) {
 ### t3.直方图均衡化
 > M * N 的灰度图I中灰度为g的像素数为h(g)，对I进行直方图均衡化得到J。
 
+* <a href="https://github.com/LWTang/graph-matlab/blob/master/t3.m">src code</a>
 * 算法
 ```
 读取 图像I M * N
@@ -79,6 +81,7 @@ for ( i=0; i<P; i++ ) {
 ### t4.直方图规定化
 > M * N 的灰度图I中灰度为g的像素数为h(g)，另给定一个直方图t(g)，对I进行变换，使变换后的直方图与t相同(近似相等)。
 
+* <a href="https://github.com/LWTang/graph-matlab/blob/master/t4.m">src code</a>
 * 算法
 ```
 读取 图像I M1 * N1 图像T M2 * N2
