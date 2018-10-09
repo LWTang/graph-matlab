@@ -110,6 +110,7 @@ for ( i=0; i<P; i++ ) {
 ### t5.图像灰度的对数/指数变换
 > 图像I整体偏暗，为了更好的区分暗区中的对象，应选用对数变换还是指数变换，给出变换方法。
 
+* <a href="https://github.com/LWTang/graph-matlab/blob/master/t5.m">src code</a>
 * 算法
 应该使用对数变换，扩展低灰度区，使暗区对比度更高，容易区分
 ```
@@ -117,3 +118,40 @@ for ( i=0; i<P; i++ ) {
 J=double(I)
 J=uint8(40*(log(J+1)))
 ```
+
+### t6.图像灰度的分段线性拉伸
+<ol>
+  <li>对灰度图I，给出灰度分段线性变换方法，使J中5%的像素灰度变为0，5%的像素灰度变为255</li>
+  <li>设计一个连续且光滑的灰度变换曲线</li>
+  <li>matlab 中 adapthisteq 的实现原理是什么</li>
+</ol>
+
+* <a href="https://github.com/LWTang/graph-matlab/blob/master/t6.m">src code</a>
+* 算法
+
+### t10.中值滤波
+> 使用大小为3×3的模板对图像I进行中值滤波，得到图像J。
+
+* <a href="https://github.com/LWTang/graph-matlab/blob/master/t10.m">src code</a>
+* 算法
+此处实现的算法对图像边缘一圈的像素没做处理。
+```
+读取 图像I
+对I加椒盐噪声后的图像为imgnois
+用imgnois初始化J
+for i=1:M-2
+    for j=1:N-2
+        mn = imgnois(i:i+2,j:j+2)
+        mn = mn(:)
+        mid = median(mn)
+        J(i+1,j+1) = mid
+```
+
+### t11.中值滤波的特性
+<ol>
+  <li>中值滤波的特性和适用场合</li>
+  <li>设计一个能保持图像中细小尺寸的边缘（如线状目标）的滤波方法</li>
+</ol>
+
+* 特性：使用一个滑动窗口来把窗口内的像素值排序，取排序中间的值作为像素点的值，有效得去除与周围像素值相差过大的像素值。
+* 适用场合：对于消除随机噪声很有用，同时保护边缘少受模糊。
