@@ -128,6 +128,18 @@ J=uint8(40*(log(J+1)))
 
 * <a href="https://github.com/LWTang/graph-matlab/blob/master/t6.m">src code</a>
 * 算法
+直接把像素值0-12置0,243-255置0，直接作出分段函数，根据像素值产生新的映射。
+```
+读取图像imgsrc M * N
+for i=1:M
+    for j=1:N
+        if(imgsrc(i,j)<12)
+            imgdes(i,j) = 0
+        elseif(imgsrc(i,j)<243)
+            imgdes(i,j) = round((imgsrc(i,j)-12)*(256/230))
+        else
+            imgdes(i,j) = 255
+```
 
 ### t10.中值滤波
 > 使用大小为3×3的模板对图像I进行中值滤波，得到图像J。
@@ -155,3 +167,12 @@ for i=1:M-2
 
 * 特性：使用一个滑动窗口来把窗口内的像素值排序，取排序中间的值作为像素点的值，有效得去除与周围像素值相差过大的像素值。
 * 适用场合：对于消除随机噪声很有用，同时保护边缘少受模糊。
+
+### t12.统计排序滤波
+<ol>
+  <li>最大值滤波的实现方法？产生什么效果？</li>
+  <li>最小值滤波的实现方法？产生什么效果？</li>
+</ol>
+
+* 在3 * 3的滤波器里找到像素值最大的值赋给中心像素，matlab实现：ordfilt2(imgsrc, 9, ones(3,3))
+* 在3 * 3的滤波器里找到像素值最小的值赋给中心像素，matlab实现：ordfilt2(imgsrc, 1, ones(3,3))
