@@ -28,6 +28,11 @@ for ( i=0; i<P; i++ ) {
 * <a href="https://github.com/LWTang/graph-matlab/blob/master/t2.m">src code</a>
 * 算法
 参考：<a href="https://blog.csdn.net/liyuan02/article/details/6750828">原理</a>和<a href="https://blog.csdn.net/lkj345/article/details/50555870">实现</a>
+
+图像旋转3步：
+1. 图像坐标转换为数学坐标
+2. 通过旋转公式对图像进行旋转
+3. 将旋转后的数学坐标转换为图像坐标
 ```
 初始化 图像J的像素值为0
 读取 图像I
@@ -128,7 +133,7 @@ J=uint8(40*(log(J+1)))
 
 * <a href="https://github.com/LWTang/graph-matlab/blob/master/t6.m">src code</a>
 * 算法
-直接把像素值0-12置0,243-255置0，直接作出分段函数，根据像素值产生新的映射。
+直接把像素值0-12置0,243-255置255，直接作出分段函数，根据像素值产生新的映射。
 ```
 读取图像imgsrc M * N
 for i=1:M
@@ -139,6 +144,40 @@ for i=1:M
             imgdes(i,j) = round((imgsrc(i,j)-12)*(256/230))
         else
             imgdes(i,j) = 255
+```
+
+### t7.边界跟踪
+> 找出二值图像I的边界。
+
+* <a href="https://github.com/LWTang/graph-matlab/blob/master/t19.m">src code</a>
+* 算法
+```
+构造一个顺时针的8邻域矩阵；
+遍历图像：
+  如果当前像素像素值为1，则将8邻域的像素值为0的点像素值改为1；
+```
+
+### t8.canny算子matlab实现
+> 实现canny算子的边缘检测。
+
+* <a href="https://github.com/LWTang/graph-matlab/blob/master/t17.m">src code</a>
+* 算法
+```
+用高斯滤波器平滑图像；
+用一阶偏导的有限差分进行计算梯度的幅值和方向：
+对梯度幅值在其梯度方向上进行非极大值抑制；
+用双阈值算法检测和连接边缘；
+```
+
+### t9.基于傅里叶变换的频域低通滤波
+> 基于傅里叶变换的频域低通滤波。
+
+* <a href="https://github.com/LWTang/graph-matlab/blob/master/t14.m">src code</a>
+* 算法
+```
+对有噪声的图像进行傅里叶变换，得到频谱；
+对得到的频谱进行理想低通滤波(采用理想低通滤波器)：
+对滤波后的频谱进行反傅里叶变换，得到结果图像；
 ```
 
 ### t10.中值滤波
